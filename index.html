@@ -8,16 +8,30 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <title>Entrenador Javier</title>
   <style>
-    :root{--bg:#f5f5f7;--card:#fff;--text:#111827;--muted:#6b7280;--accent:#111827;--border:#e5e7eb}
-    *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:760px;margin:auto;padding:18px}.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:14px}
-    h1,h2,h3{margin:0 0 10px}p{margin:6px 0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .pill{padding:10px;border:1px solid var(--border);border-radius:12px;background:#fafafa}
-    button{appearance:none;border:0;border-radius:12px;padding:12px 14px;background:var(--accent);color:#fff;font-size:16px}
+    :root{--bg:#f5f5f7;--card:#fff;--text:#111827;--muted:#6b7280;--accent:#111827;--border:#e5e7eb;--soft:#f9fafb}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:780px;margin:auto;padding:18px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:14px}
+    h1,h2{margin:0 0 10px}
+    p{margin:6px 0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+    .tab{border:1px solid var(--border);background:#fff;color:var(--text);padding:11px 8px;border-radius:12px;font-size:14px}
+    .tab.active{background:var(--accent);color:#fff}
+    .pill{padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--soft)}
+    .small{font-size:12px;color:var(--muted)}
+    .session{display:none}.session.active{display:block}
+    .exercise{border-top:1px solid var(--border);padding:12px 0}
+    .exercise:first-child{border-top:0}
+    .exercise strong{display:block}
+    .meta{font-size:14px;color:var(--muted);margin-top:4px;line-height:1.45}
+    .row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px}
     input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:#fff}
-    label{font-size:13px;color:var(--muted);display:block}.row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px}
-    .hist{font-size:14px;line-height:1.5}.small{font-size:12px;color:var(--muted)}
-    @media(max-width:560px){.row{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}
+    label{font-size:13px;color:var(--muted);display:block}
+    button{appearance:none;border:0;border-radius:12px;padding:12px 14px;background:var(--accent);color:#fff;font-size:16px}
+    .saved{margin-top:8px}
+    @media(max-width:600px){.grid{grid-template-columns:1fr}.tabs{grid-template-columns:1fr 1fr}.row{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
@@ -26,48 +40,70 @@
     <h1>Entrenador Javier</h1>
     <p>Fuerza + running · objetivo Media Maratón Madrid, abril 2027</p>
     <div class="grid">
-      <div class="pill"><strong>Fuerza</strong><br><span class="small">Progresión por RIR</span></div>
+      <div class="pill"><strong>Fuerza</strong><br><span class="small">Torso A · Torso B · Pierna</span></div>
       <div class="pill"><strong>Running</strong><br><span class="small">Base aeróbica progresiva</span></div>
     </div>
-  </div>
-
-  <div class="card">
-    <h2>Histórico cargado</h2>
-    <div class="hist">
-      <strong>Torso B · 29/08/2026</strong><br>
-      52,5×10 RIR2 · 52,5×10 RIR1 · 52,5×8 RIR1<br>
-      17,5×9 RIR1 · 17,5×9 RIR1 · 17,5×8 RIR1<br>
-      42,5×12 RIR3 · 52,5×13 RIR2 · 52,5×14 RIR1<br>
-      7,5×12 RIR2 · 7,5×14 RIR2 · 7,5×16 RIR1<br>
-      7,5×10 RIR2 · 7,5×12 RIR1 · 7,5×13 RIR1<br>
-      41×15 RIR1 · 45×10 RIR1 · 45×8 RIR1
-      <hr style="border:0;border-top:1px solid var(--border);margin:12px 0">
-      <strong>Pierna · sesión reciente</strong><br>
-      70×12 RIR3 · 70×15 RIR1 · 70×13 RIR1<br>
-      41×15 RIR5 · 50×15 RIR4 · 54×20 RIR3<br>
-      59×13 RIR2 · 59×12 RIR2 · 59×12 RIR2
-      <hr style="border:0;border-top:1px solid var(--border);margin:12px 0">
-      <strong>Running</strong><br>FC media registrada: 140 ppm
+    <div class="tabs">
+      <button class="tab active" data-tab="a">Torso A</button>
+      <button class="tab" data-tab="b">Torso B</button>
+      <button class="tab" data-tab="p">Pierna</button>
+      <button class="tab" data-tab="r">Running</button>
     </div>
-    <p class="small">No se asignan nombres de ejercicio a series antiguas cuando no constan con suficiente certeza.</p>
+  </div>
+
+  <div id="a" class="card session active">
+    <h2>Torso A</h2>
+    <p class="small">Sesión registrada tras el parón.</p>
+    <div class="exercise"><strong>Press inclinado mancuernas</strong><div class="meta">17,5 kg · 10 / 10 / 10 / 8</div></div>
+    <div class="exercise"><strong>Remo pecho apoyado</strong><div class="meta">12,5 kg · 10 / 10 / 10 / 10 · última serie RIR 2</div></div>
+    <div class="exercise"><strong>Press máquina</strong><div class="meta">42,5 kg · 10 / 12 / 12</div></div>
+    <div class="exercise"><strong>Jalón neutro</strong><div class="meta">42,5 kg · 10 / 10 / 10</div></div>
+    <div class="exercise"><strong>Laterales mancuernas</strong><div class="meta">7,5 kg · 12 / 12 / 15</div></div>
+    <div class="exercise"><strong>Tríceps cuerda</strong><div class="meta">41 kg · 12 / 11 / 10</div></div>
+    <div class="exercise"><strong>Curl inclinado</strong><div class="meta">7,5 kg · 10 / 12 / 12</div></div>
+  </div>
+
+  <div id="b" class="card session">
+    <h2>Torso B</h2>
+    <div class="exercise"><strong>Bloque 1</strong><div class="meta">52,5 kg · 10 RIR2 / 10 RIR1 / 8 RIR1</div></div>
+    <div class="exercise"><strong>Bloque 2</strong><div class="meta">17,5 kg · 9 RIR1 / 9 RIR1 / 8 RIR1</div></div>
+    <div class="exercise"><strong>Bloque 3</strong><div class="meta">42,5 kg · 12 RIR3 → 52,5 kg · 13 RIR2 / 14 RIR1</div></div>
+    <div class="exercise"><strong>Bloque 4</strong><div class="meta">7,5 kg · 12 RIR2 / 14 RIR2 / 16 RIR1</div></div>
+    <div class="exercise"><strong>Bloque 5</strong><div class="meta">7,5 kg · 10 RIR2 / 12 RIR1 / 13 RIR1</div></div>
+    <div class="exercise"><strong>Bloque 6</strong><div class="meta">41 kg · 15 RIR1 → 45 kg · 10 RIR1 / 8 RIR1</div></div>
+  </div>
+
+  <div id="p" class="card session">
+    <h2>Pierna</h2>
+    <div class="exercise"><strong>Bloque 1</strong><div class="meta">70 kg · 12 RIR3 / 15 RIR1 / 13 RIR1</div></div>
+    <div class="exercise"><strong>Bloque 2</strong><div class="meta">41 kg · 15 RIR5 → 50 kg · 15 RIR4 → 54 kg · 20 RIR3</div></div>
+    <div class="exercise"><strong>Bloque 3</strong><div class="meta">59 kg · 13 RIR2 / 12 RIR2 / 12 RIR2</div></div>
+  </div>
+
+  <div id="r" class="card session">
+    <h2>Running</h2>
+    <div class="exercise"><strong>Último dato registrado</strong><div class="meta">Frecuencia cardiaca media: 140 ppm</div></div>
   </div>
 
   <div class="card">
-    <h2>Nueva serie</h2>
+    <h2>Registrar nueva serie</h2>
     <form id="setForm">
       <div class="row">
-        <label>Ejercicio<input id="ex" required placeholder="Ej. jalón"></label>
+        <label>Sesión<select id="session"><option>Torso A</option><option>Torso B</option><option>Pierna</option></select></label>
+        <label>Ejercicio<input id="ex" required placeholder="Ej. press inclinado"></label>
         <label>Kg<input id="kg" type="number" step="0.5" min="0" required></label>
         <label>Reps<input id="reps" type="number" min="1" required></label>
-        <label>RIR<select id="rir"><option>0</option><option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
       </div>
-      <button style="margin-top:12px;width:100%" type="submit">Guardar serie</button>
+      <div class="row" style="margin-top:8px">
+        <label>RIR<select id="rir"><option>0</option><option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+        <div style="grid-column:span 3;align-self:end"><button style="width:100%" type="submit">Guardar serie</button></div>
+      </div>
     </form>
-    <div id="saved" style="margin-top:12px"></div>
+    <div id="saved"></div>
   </div>
 
   <div class="card">
-    <h2>Running</h2>
+    <h2>Registrar carrera</h2>
     <form id="runForm">
       <div class="row">
         <label>Distancia km<input id="dist" type="number" step="0.01" min="0"></label>
@@ -77,29 +113,30 @@
       </div>
       <button style="margin-top:12px;width:100%" type="submit">Guardar carrera</button>
     </form>
-    <div id="runs" style="margin-top:12px"></div>
+    <div id="runs"></div>
   </div>
 </div>
 
 <script>
-const sets = JSON.parse(localStorage.getItem('sets') || '[]');
-const runs = JSON.parse(localStorage.getItem('runs') || '[]');
-
+const tabs=[...document.querySelectorAll('.tab')];
+const sessions=[...document.querySelectorAll('.session')];
+tabs.forEach(btn=>btn.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('active'));sessions.forEach(x=>x.classList.remove('active'));btn.classList.add('active');document.getElementById(btn.dataset.tab).classList.add('active');}));
+const sets=JSON.parse(localStorage.getItem('sets')||'[]');
+const runs=JSON.parse(localStorage.getItem('runs')||'[]');
 function render(){
-  document.getElementById('saved').innerHTML = sets.slice().reverse().slice(0,8).map(s=>`<div class="pill" style="margin-top:8px">${s.ex}: ${s.kg} kg × ${s.reps} · RIR ${s.rir}</div>`).join('');
-  document.getElementById('runs').innerHTML = runs.slice().reverse().slice(0,8).map(r=>`<div class="pill" style="margin-top:8px">${r.dist} km · ${r.mins} min · FC ${r.hr||'-'} · RPE ${r.rpe||'-'}</div>`).join('');
+  document.getElementById('saved').innerHTML=sets.slice().reverse().slice(0,10).map(s=>`<div class="pill saved"><strong>${s.session}</strong> · ${s.ex}: ${s.kg} kg × ${s.reps} · RIR ${s.rir}</div>`).join('');
+  document.getElementById('runs').innerHTML=runs.slice().reverse().slice(0,10).map(r=>`<div class="pill saved">${r.dist} km · ${r.mins} min · FC ${r.hr||'-'} · RPE ${r.rpe||'-'}</div>`).join('');
 }
-document.getElementById('setForm').addEventListener('submit', e=>{
+document.getElementById('setForm').addEventListener('submit',e=>{
   e.preventDefault();
-  sets.push({ex:ex.value,kg:+kg.value,reps:+reps.value,rir:+rir.value,date:new Date().toISOString()});
-  localStorage.setItem('sets',JSON.stringify(sets)); e.target.reset(); render();
+  sets.push({session:document.getElementById('session').value,ex:document.getElementById('ex').value,kg:+document.getElementById('kg').value,reps:+document.getElementById('reps').value,rir:+document.getElementById('rir').value,date:new Date().toISOString()});
+  localStorage.setItem('sets',JSON.stringify(sets));e.target.reset();render();
 });
-document.getElementById('runForm').addEventListener('submit', e=>{
+document.getElementById('runForm').addEventListener('submit',e=>{
   e.preventDefault();
-  runs.push({dist:+dist.value,mins:+mins.value,hr:+hr.value||null,rpe:+rpe.value||null,date:new Date().toISOString()});
-  localStorage.setItem('runs',JSON.stringify(runs)); e.target.reset(); render();
+  runs.push({dist:+document.getElementById('dist').value,mins:+document.getElementById('mins').value,hr:+document.getElementById('hr').value||null,rpe:+document.getElementById('rpe').value||null,date:new Date().toISOString()});
+  localStorage.setItem('runs',JSON.stringify(runs));e.target.reset();render();
 });
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 render();
 </script>
 </body>
