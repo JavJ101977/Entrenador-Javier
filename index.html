@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <title>Entrenador Javier</title>
+  <style>
+    :root{--bg:#f5f5f7;--card:#fff;--text:#111827;--muted:#6b7280;--accent:#111827;--border:#e5e7eb}
+    *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:760px;margin:auto;padding:18px}.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;margin-bottom:14px}
+    h1,h2,h3{margin:0 0 10px}p{margin:6px 0;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .pill{padding:10px;border:1px solid var(--border);border-radius:12px;background:#fafafa}
+    button{appearance:none;border:0;border-radius:12px;padding:12px 14px;background:var(--accent);color:#fff;font-size:16px}
+    input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;font-size:16px;background:#fff}
+    label{font-size:13px;color:var(--muted);display:block}.row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:8px}
+    .hist{font-size:14px;line-height:1.5}.small{font-size:12px;color:var(--muted)}
+    @media(max-width:560px){.row{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Entrenador Javier</h1>
+    <p>Fuerza + running · objetivo Media Maratón Madrid, abril 2027</p>
+    <div class="grid">
+      <div class="pill"><strong>Fuerza</strong><br><span class="small">Progresión por RIR</span></div>
+      <div class="pill"><strong>Running</strong><br><span class="small">Base aeróbica progresiva</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Histórico cargado</h2>
+    <div class="hist">
+      <strong>Torso B · 29/08/2026</strong><br>
+      52,5×10 RIR2 · 52,5×10 RIR1 · 52,5×8 RIR1<br>
+      17,5×9 RIR1 · 17,5×9 RIR1 · 17,5×8 RIR1<br>
+      42,5×12 RIR3 · 52,5×13 RIR2 · 52,5×14 RIR1<br>
+      7,5×12 RIR2 · 7,5×14 RIR2 · 7,5×16 RIR1<br>
+      7,5×10 RIR2 · 7,5×12 RIR1 · 7,5×13 RIR1<br>
+      41×15 RIR1 · 45×10 RIR1 · 45×8 RIR1
+      <hr style="border:0;border-top:1px solid var(--border);margin:12px 0">
+      <strong>Pierna · sesión reciente</strong><br>
+      70×12 RIR3 · 70×15 RIR1 · 70×13 RIR1<br>
+      41×15 RIR5 · 50×15 RIR4 · 54×20 RIR3<br>
+      59×13 RIR2 · 59×12 RIR2 · 59×12 RIR2
+      <hr style="border:0;border-top:1px solid var(--border);margin:12px 0">
+      <strong>Running</strong><br>FC media registrada: 140 ppm
+    </div>
+    <p class="small">No se asignan nombres de ejercicio a series antiguas cuando no constan con suficiente certeza.</p>
+  </div>
+
+  <div class="card">
+    <h2>Nueva serie</h2>
+    <form id="setForm">
+      <div class="row">
+        <label>Ejercicio<input id="ex" required placeholder="Ej. jalón"></label>
+        <label>Kg<input id="kg" type="number" step="0.5" min="0" required></label>
+        <label>Reps<input id="reps" type="number" min="1" required></label>
+        <label>RIR<select id="rir"><option>0</option><option selected>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+      </div>
+      <button style="margin-top:12px;width:100%" type="submit">Guardar serie</button>
+    </form>
+    <div id="saved" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card">
+    <h2>Running</h2>
+    <form id="runForm">
+      <div class="row">
+        <label>Distancia km<input id="dist" type="number" step="0.01" min="0"></label>
+        <label>Minutos<input id="mins" type="number" step="1" min="0"></label>
+        <label>FC media<input id="hr" type="number" step="1" min="0"></label>
+        <label>RPE<input id="rpe" type="number" min="1" max="10"></label>
+      </div>
+      <button style="margin-top:12px;width:100%" type="submit">Guardar carrera</button>
+    </form>
+    <div id="runs" style="margin-top:12px"></div>
+  </div>
+</div>
+
+<script>
+const sets = JSON.parse(localStorage.getItem('sets') || '[]');
+const runs = JSON.parse(localStorage.getItem('runs') || '[]');
+
+function render(){
+  document.getElementById('saved').innerHTML = sets.slice().reverse().slice(0,8).map(s=>`<div class="pill" style="margin-top:8px">${s.ex}: ${s.kg} kg × ${s.reps} · RIR ${s.rir}</div>`).join('');
+  document.getElementById('runs').innerHTML = runs.slice().reverse().slice(0,8).map(r=>`<div class="pill" style="margin-top:8px">${r.dist} km · ${r.mins} min · FC ${r.hr||'-'} · RPE ${r.rpe||'-'}</div>`).join('');
+}
+document.getElementById('setForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  sets.push({ex:ex.value,kg:+kg.value,reps:+reps.value,rir:+rir.value,date:new Date().toISOString()});
+  localStorage.setItem('sets',JSON.stringify(sets)); e.target.reset(); render();
+});
+document.getElementById('runForm').addEventListener('submit', e=>{
+  e.preventDefault();
+  runs.push({dist:+dist.value,mins:+mins.value,hr:+hr.value||null,rpe:+rpe.value||null,date:new Date().toISOString()});
+  localStorage.setItem('runs',JSON.stringify(runs)); e.target.reset(); render();
+});
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+render();
+</script>
+</body>
+</html>
