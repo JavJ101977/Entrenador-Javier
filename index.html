@@ -16,7 +16,7 @@
     h1,h2{margin:0 0 10px}
     p{margin:6px 0;color:var(--muted)}
     .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    .tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+    .tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
     .tab{border:1px solid var(--border);background:#fff;color:var(--text);padding:11px 8px;border-radius:12px;font-size:14px}
     .tab.active{background:var(--accent);color:#fff}
     .pill{padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--soft)}
@@ -40,13 +40,14 @@
     <h1>Entrenador Javier</h1>
     <p>Fuerza + running · objetivo Media Maratón Madrid, abril 2027</p>
     <div class="grid">
-      <div class="pill"><strong>Fuerza</strong><br><span class="small">Torso A · Torso B · Pierna</span></div>
+      <div class="pill"><strong>Fuerza</strong><br><span class="small">Torso A · Torso B · Pierna A · Pierna B</span></div>
       <div class="pill"><strong>Running</strong><br><span class="small">Base aeróbica progresiva</span></div>
     </div>
     <div class="tabs">
       <button class="tab active" data-tab="a">Torso A</button>
       <button class="tab" data-tab="b">Torso B</button>
-      <button class="tab" data-tab="p">Pierna</button>
+      <button class="tab" data-tab="p">Pierna A</button>
+      <button class="tab" data-tab="pb">Pierna B</button>
       <button class="tab" data-tab="r">Running</button>
     </div>
   </div>
@@ -85,6 +86,20 @@
 <div class="exercise"><strong>Crunch polea</strong><div class="meta">59 kg · 13 / 12 / 12 · mantener 59 kg</div></div>
 </div>
 
+<div id="pb" class="card session">
+  <h2>Pierna B + estética</h2>
+  <p class="small">Estímulo de piernas dejando recursos para hombros y brazos · sin series de aproximación.</p>
+  <div class="exercise"><strong>Prensa</strong><div class="meta">3 series · 8–12 reps · descanso 2 min</div></div>
+  <div class="exercise"><strong>Zancada búlgara con mancuernas</strong><div class="meta">3 series por pierna · 8–12 reps · RIR 2 · descanso 90 s</div></div>
+  <div class="exercise"><strong>Curl femoral tumbado</strong><div class="meta">3 series · 10–15 reps · descanso 75 s</div></div>
+  <div class="exercise"><strong>Extensión de cuádriceps</strong><div class="meta">2 series · 12–15 reps · descanso 60 s</div></div>
+  <div class="exercise"><strong>Elevaciones laterales en máquina</strong><div class="meta">4 series · 12–20 reps · descanso 60 s</div></div>
+  <div class="exercise"><strong>Curl martillo</strong><div class="meta">3 series · 10–15 reps · descanso 60 s</div></div>
+  <div class="exercise"><strong>Tríceps con cuerda</strong><div class="meta">3 series · 10–15 reps · descanso 60 s</div></div>
+  <div class="exercise"><strong>Elevaciones de piernas</strong><div class="meta">3 series · 10–15 reps · descanso 60 s</div></div>
+  <p class="small">Curl martillo y tríceps con cuerda pueden hacerse en superserie.</p>
+</div>
+
 <div id="r" class="card session">
     <h2>Running</h2>
     <div class="exercise"><strong>Último dato registrado</strong><div class="meta">Frecuencia cardiaca media: 140 ppm</div></div>
@@ -94,7 +109,7 @@
     <h2>Registrar nueva serie</h2>
     <form id="setForm">
       <div class="row">
-        <label>Sesión<select id="session"><option>Torso A</option><option>Torso B</option><option>Pierna</option></select></label>
+        <label>Sesión<select id="session"><option>Torso A</option><option>Torso B</option><option>Pierna A</option><option>Pierna B + estética</option></select></label>
         <label>Ejercicio<input id="ex" required placeholder="Ej. press inclinado"></label>
         <label>Kg<input id="kg" type="number" step="0.5" min="0" required></label>
         <label>Reps<input id="reps" type="number" min="1" required></label>
